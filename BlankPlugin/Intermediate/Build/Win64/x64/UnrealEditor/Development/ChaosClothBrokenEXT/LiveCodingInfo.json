@@ -1,0 +1,9 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.ChaosClothBrokenEXT.cpp.obj": [
+			"PerModuleInline.gen.cpp.obj",
+			"ChaosClothBrokenEXT.cpp.obj"
+		]
+	}
+}

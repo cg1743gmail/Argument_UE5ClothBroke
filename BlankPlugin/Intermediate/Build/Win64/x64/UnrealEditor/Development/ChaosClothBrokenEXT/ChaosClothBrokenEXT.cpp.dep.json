@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\work\\ugit\\ue55tensiongen\\plugins\\chaosclothbrokenext\\source\\chaosclothbrokenext\\private\\chaosclothbrokenext.cpp",
+        "ProvidedModule": "",
+        "PCH": "e:\\work\\ugit\\ue55tensiongen\\intermediate\\build\\win64\\x64\\ue55tensiongeneditor\\development\\unrealed\\sharedpch.unrealed.cpp20.h.pch",
+        "Includes": [
+            "e:\\work\\ugit\\ue55tensiongen\\plugins\\chaosclothbrokenext\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\chaosclothbrokenext\\definitions.chaosclothbrokenext.h",
+            "e:\\work\\ugit\\ue55tensiongen\\plugins\\chaosclothbrokenext\\source\\chaosclothbrokenext\\public\\chaosclothbrokenext.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
