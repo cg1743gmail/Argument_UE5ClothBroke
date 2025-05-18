@@ -61,12 +61,15 @@ public:
 	 * @param ImpactForce 碰撞力
 	 * @param RadiusMultiplier 半径倍率
 	 * @param OutBreakRadius 输出的断裂半径
+	 * @param bDebugVisualization 是否启用调试可视化
+	 * @param DebugDuration 调试绘制持续时间
 	 * @return 是否成功模拟碰撞
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Cloth Breaking")
 	static bool SimulateBulletImpact(UPrimitiveComponent* TargetComponent,
 		const FVector& ImpactLocation, float BulletSize, float ImpactForce,
-		float RadiusMultiplier, float& OutBreakRadius);
+		float RadiusMultiplier, float& OutBreakRadius,
+		bool bDebugVisualization = false, float DebugDuration = 3.0f);
 
 	/**
 	 * 设置调试可视化

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "DynamicMesh/DynamicMesh.h"
+#include "DynamicMesh/DynamicMesh3.h"
 #include "GeometryScript/GeometryScriptTypes.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/StaticMeshActor.h"
@@ -47,7 +47,7 @@ protected:
 	 * @return 是否成功提取
 	 */
 	bool ExtractDynamicMeshFromCloth(USkeletalMeshComponent* SkeletalMeshComponent,
-		int32 MaterialID, UDynamicMesh* OutDynamicMesh);
+		int32 MaterialID, TSharedPtr<UE::Geometry::FDynamicMesh3>& OutDynamicMesh);
 
 	/**
 	 * 在指定位置切割网格
@@ -60,10 +60,10 @@ protected:
 	 * @param OutFragments 输出的碎片网格列表
 	 * @return 是否成功切割
 	 */
-	bool CutMeshAtLocation(UDynamicMesh* DynamicMesh,
+	bool CutMeshAtLocation(TSharedPtr<UE::Geometry::FDynamicMesh3> DynamicMesh,
 		const FVector& WorldLocation, float Radius, int32 FragmentCount,
 		float MinSize, float MaxSize,
-		TArray<UDynamicMesh*>& OutFragments);
+		TArray<TSharedPtr<UE::Geometry::FDynamicMesh3>>& OutFragments);
 
 	/**
 	 * 创建碎片Actor
@@ -72,7 +72,7 @@ protected:
 	 * @param Material 材质
 	 * @return 创建的静态网格Actor
 	 */
-	AStaticMeshActor* CreateFragmentActor(UDynamicMesh* FragmentMesh,
+	AStaticMeshActor* CreateFragmentActor(TSharedPtr<UE::Geometry::FDynamicMesh3> FragmentMesh,
 		const FTransform& WorldTransform, UMaterialInterface* Material);
 
 	/**

@@ -182,7 +182,8 @@ float UBulletImpactHandler::CalculateImpactForce(const FHitResult& HitResult)
 
 bool UBulletImpactHandler::SimulateBulletImpact(UPrimitiveComponent* TargetComponent,
     const FVector& ImpactLocation, float BulletSize, float ImpactForce,
-    float RadiusMultiplier, float& OutBreakRadius)
+    float RadiusMultiplier, float& OutBreakRadius,
+    bool bDebugVisualization, float DebugDuration)
 {
     if (!TargetComponent)
     {
@@ -197,7 +198,7 @@ bool UBulletImpactHandler::SimulateBulletImpact(UPrimitiveComponent* TargetCompo
     OutBreakRadius = FMath::Clamp(OutBreakRadius, 1.0f, 100.0f);
 
     // 调试可视化
-    if (bEnableDebugVisualization && TargetComponent->GetWorld())
+    if (bDebugVisualization && TargetComponent->GetWorld())
     {
         DrawDebugSphere(
             TargetComponent->GetWorld(),
@@ -206,7 +207,7 @@ bool UBulletImpactHandler::SimulateBulletImpact(UPrimitiveComponent* TargetCompo
             16,
             FColor::Green,
             false,
-            DebugDrawDuration,
+            DebugDuration,
             0,
             1.0f
         );
@@ -217,7 +218,7 @@ bool UBulletImpactHandler::SimulateBulletImpact(UPrimitiveComponent* TargetCompo
             FString::Printf(TEXT("Simulated Force: %.1f"), ImpactForce),
             nullptr,
             FColor::White,
-            DebugDrawDuration
+            DebugDuration
         );
     }
 
