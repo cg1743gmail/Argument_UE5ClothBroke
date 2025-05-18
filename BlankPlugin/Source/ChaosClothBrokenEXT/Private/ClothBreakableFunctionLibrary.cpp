@@ -276,27 +276,8 @@ bool UClothBreakableFunctionLibrary::EnableDebugVisualization(USkeletalMeshCompo
         return false;
     }
 
-    // 获取子弹碰撞处理器
-    UBulletImpactHandler* BulletHandler = nullptr;
-
-    // 使用反射获取私有成员
-    UProperty* BulletHandlerProperty = UClothBreakableComponent::StaticClass()->FindPropertyByName(TEXT("BulletImpactHandler"));
-    if (BulletHandlerProperty)
-    {
-        UObjectProperty* ObjectProperty = Cast<UObjectProperty>(BulletHandlerProperty);
-        if (ObjectProperty)
-        {
-            void* PropertyAddress = BulletHandlerProperty->ContainerPtrToValuePtr<void>(BreakableComponent);
-            BulletHandler = Cast<UBulletImpactHandler>(ObjectProperty->GetObjectPropertyValue(PropertyAddress));
-        }
-    }
-
-    // 如果无法通过反射获取，则尝试创建一个新的
-    if (!BulletHandler)
-    {
-        BulletHandler = NewObject<UBulletImpactHandler>(BreakableComponent);
-    }
-
+    // 创建一个新的BulletImpactHandler实例
+    UBulletImpactHandler* BulletHandler = NewObject<UBulletImpactHandler>(BreakableComponent);
     if (BulletHandler)
     {
         // 设置调试可视化

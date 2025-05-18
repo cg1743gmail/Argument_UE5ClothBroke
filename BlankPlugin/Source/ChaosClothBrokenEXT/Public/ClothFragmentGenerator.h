@@ -6,6 +6,8 @@
 #include "UObject/NoExportTypes.h"
 #include "DynamicMesh/DynamicMesh3.h"
 #include "GeometryScript/GeometryScriptTypes.h"
+// 兼容性包含，确保能找到DynamicMesh.h
+#include "GeometryCore/Public/DynamicMesh/DynamicMesh3.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/StaticMeshActor.h"
 #include "ClothFragmentGenerator.generated.h"
