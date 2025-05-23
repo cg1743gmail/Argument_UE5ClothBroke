@@ -72,9 +72,6 @@ protected:
 	/** 初始化可断裂布料 */
 	void InitializeBreakableCloth();
 
-	/** 处理布料碰撞事件 */
-	void HandleClothCollision(const FClothCollisionData& CollisionData);
-
 	/** 在指定位置生成碎片 */
 	void GenerateFragmentsAtLocation(const FVector& Location, float Radius, float ImpactForce);
 

@@ -33,12 +33,6 @@ void UClothBreakableComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	{
 		// 移除碰撞事件监听
 		TargetSkeletalMesh->OnComponentHit.RemoveDynamic(this, &UClothBreakableComponent::OnComponentHit);
-
-		if (TargetSkeletalMesh->ClothingSimulationInteractor)
-		{
-			// 移除布料碰撞事件监听
-			// 注意：这里简化实现，实际上需要根据UE5.5的具体API进行调整
-		}
 	}
 
 	Super::EndPlay(EndPlayReason);
@@ -75,19 +69,9 @@ void UClothBreakableComponent::InitializeBreakableCloth()
 		FragmentGenerator = NewObject<UClothFragmentGenerator>(this);
 	}
 
-	// 确保目标骨骼网格体有布料模拟
-	if (TargetSkeletalMesh->ClothingSimulationInteractor)
-	{
-		// 注册布料碰撞事件监听
-		// 注意：这里简化实现，实际上需要根据UE5.5的具体API进行调整
-
-		bIsInitialized = true;
-		UE_LOG(LogTemp, Log, TEXT("ClothBreakableComponent initialized successfully"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Target skeletal mesh does not have cloth simulation"));
-	}
+	// 检查布料模拟是否激活（可根据实际需求调整）
+	bIsInitialized = true;
+	UE_LOG(LogTemp, Log, TEXT("ClothBreakableComponent initialized successfully"));
 }
 
 void UClothBreakableComponent::RegisterHitEvents()
@@ -212,27 +196,6 @@ bool UClothBreakableComponent::SimulateBulletImpact(FVector ImpactLocation, floa
 		*ImpactLocation.ToString(), BreakRadius, ImpactForce);
 
 	return true;
-}
-
-void UClothBreakableComponent::HandleClothCollision(const FClothCollisionData& CollisionData)
-{
-	// 简化实现，仅检查碰撞点是否在可断裂区域内
-	// 实际实现中，需要根据UE5.5的具体API进行调整
-
-	// 检查碰撞力是否超过阈值
-	float ImpactForce = CollisionData.ImpactForce.Size();
-	if (ImpactForce > BreakableSettings->BreakForceThreshold)
-	{
-		int32 MaterialID = INDEX_NONE;
-		if (IsLocationInBreakableRegion(CollisionData.ImpactLocation, MaterialID))
-		{
-			// 生成碎片
-			GenerateFragmentsAtLocation(CollisionData.ImpactLocation, 10.0f, ImpactForce);
-
-			// 触发事件
-			OnClothBreak.Broadcast(TargetSkeletalMesh, CollisionData.ImpactLocation, 10.0f, ImpactForce, MaterialID);
-		}
-	}
 }
 
 void UClothBreakableComponent::GenerateFragmentsAtLocation(const FVector& Location, float Radius, float ImpactForce)

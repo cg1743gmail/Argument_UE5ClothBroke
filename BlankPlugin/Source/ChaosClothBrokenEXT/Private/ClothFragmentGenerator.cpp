@@ -28,7 +28,7 @@ bool UClothFragmentGenerator::GenerateFragmentsFromCloth(USkeletalMeshComponent*
     const FVector& ImpactLocation, float ImpactRadius, int32 MaterialID,
     int32 FragmentCount, float MinSize, float MaxSize)
 {
-    if (!SkeletalMeshComponent || !SkeletalMeshComponent->SkeletalMesh)
+    if (!SkeletalMeshComponent || !SkeletalMeshComponent->GetSkeletalMeshAsset())
     {
         UE_LOG(LogTemp, Warning, TEXT("Invalid skeletal mesh component"));
         return false;
@@ -96,7 +96,7 @@ bool UClothFragmentGenerator::ExtractDynamicMeshFromCloth(USkeletalMeshComponent
     OutDynamicMesh->Reset();
 
     // 获取骨骼网格体的当前姿势网格
-    USkeletalMesh* SkelMesh = SkeletalMeshComponent->SkeletalMesh;
+    USkeletalMesh* SkelMesh = SkeletalMeshComponent->GetSkeletalMeshAsset();
     if (!SkelMesh)
     {
         return false;

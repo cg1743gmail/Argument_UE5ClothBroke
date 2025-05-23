@@ -295,7 +295,7 @@ bool UClothBreakableFunctionLibrary::EnableDebugVisualization(USkeletalMeshCompo
 bool UClothBreakableFunctionLibrary::GetSkeletalMeshMaterialIDs(USkeletalMeshComponent* SkeletalMeshComponent,
     TArray<int32>& OutMaterialIDs)
 {
-    if (!SkeletalMeshComponent || !SkeletalMeshComponent->SkeletalMesh)
+    if (!SkeletalMeshComponent || !SkeletalMeshComponent->GetSkeletalMeshAsset())
     {
         UE_LOG(LogTemp, Warning, TEXT("Invalid skeletal mesh component"));
         return false;
@@ -318,19 +318,13 @@ bool UClothBreakableFunctionLibrary::GetSkeletalMeshMaterialIDs(USkeletalMeshCom
 
 bool UClothBreakableFunctionLibrary::HasCloth(USkeletalMeshComponent* SkeletalMeshComponent)
 {
-    if (!SkeletalMeshComponent || !SkeletalMeshComponent->SkeletalMesh)
+    if (!SkeletalMeshComponent || !SkeletalMeshComponent->GetSkeletalMeshAsset())
     {
         return false;
     }
 
-    // 检查是否有布料模拟
-    if (SkeletalMeshComponent->ClothingSimulationInteractor)
-    {
-        return true;
-    }
-
     // 检查骨骼网格体是否有布料资产
-    USkeletalMesh* SkelMesh = SkeletalMeshComponent->SkeletalMesh;
+    USkeletalMesh* SkelMesh = SkeletalMeshComponent->GetSkeletalMeshAsset();
     if (SkelMesh)
     {
         // 在UE5中，可以通过以下方式检查布料资产
