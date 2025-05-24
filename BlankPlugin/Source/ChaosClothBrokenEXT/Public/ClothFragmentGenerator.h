@@ -4,21 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "DynamicMesh/DynamicMesh3.h"
-#include "GeometryScript/GeometryScriptTypes.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/StaticMeshActor.h"
-#include "GeometryScript/MeshPrimitiveFunctions.h"
-#include "GeometryScript/MeshBasicEditFunctions.h"
-#include "GeometryScript/MeshBooleanFunctions.h"
-#include "GeometryScript/MeshMaterialFunctions.h"
 #include "ClothFragmentGenerator.generated.h"
 
-class UDynamicMesh;
-
 /**
- * 布料碎片生成器
- * 使用Geometry Script生成布料碎片
+ * 布料碎片生成器 - 简化版
+ * 使用基本方法模拟布料碎片
  */
 UCLASS(BlueprintType)
 class CHAOSCLOTHBROKENEXT_API UClothFragmentGenerator : public UObject
@@ -46,49 +38,20 @@ public:
 
 protected:
 	/**
-	 * 从布料网格提取动态网格
-	 * @param SkeletalMeshComponent 目标骨骼网格体组件
-	 * @param MaterialID 材质ID
-	 * @param OutDynamicMesh 输出的动态网格
-	 * @return 是否成功提取
-	 */
-	bool ExtractDynamicMeshFromCloth(USkeletalMeshComponent* SkeletalMeshComponent,
-		int32 MaterialID, UDynamicMesh* OutDynamicMesh);
-
-	/**
-	 * 在指定位置切割网格
-	 * @param DynamicMesh 要切割的动态网格
-	 * @param WorldLocation 世界空间中的切割位置
-	 * @param Radius 切割半径
-	 * @param FragmentCount 生成的碎片数量
-	 * @param MinSize 最小碎片尺寸
-	 * @param MaxSize 最大碎片尺寸
-	 * @param OutFragments 输出的碎片网格列表
-	 * @return 是否成功切割
-	 */
-	bool CutMeshAtLocation(UDynamicMesh* DynamicMesh,
-		const FVector& WorldLocation, float Radius, int32 FragmentCount,
-		float MinSize, float MaxSize,
-		TArray<UDynamicMesh*>& OutFragments);
-
-	/**
-	 * 创建碎片Actor
-	 * @param FragmentMesh 碎片网格
-	 * @param WorldTransform 世界变换
+	 * 创建简单的碎片Actor
+	 * @param WorldLocation 世界位置
+	 * @param Size 碎片大小
 	 * @param Material 材质
-	 * @return 创建的静态网格Actor
+	 * @return 创建的Actor
 	 */
-	AStaticMeshActor* CreateFragmentActor(UDynamicMesh* FragmentMesh,
-		const FTransform& WorldTransform, UMaterialInterface* Material);
+	AActor* CreateSimpleFragment(const FVector& WorldLocation, float Size, UMaterialInterface* Material);
 
 	/**
 	 * 为碎片设置物理属性
 	 * @param FragmentComponent 碎片组件
-	 * @param WorldTransform 世界变换
 	 * @return 是否成功设置
 	 */
-	bool SetupFragmentPhysics(UStaticMeshComponent* FragmentComponent,
-		const FTransform& WorldTransform);
+	bool SetupFragmentPhysics(UPrimitiveComponent* FragmentComponent);
 
 	/**
 	 * 清理旧的碎片
@@ -105,5 +68,5 @@ protected:
 private:
 	/** 已生成的碎片列表 */
 	UPROPERTY()
-	TArray<AStaticMeshActor*> GeneratedFragments;
+	TArray<AActor*> GeneratedFragments;
 };
